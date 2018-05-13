@@ -21,3 +21,9 @@ if err != nil {
   log.Fatal(err)
 }
 ```
+
+Retry forever.
+
+```go
+retry.DoForever(thisFunctionMayFail)
+```

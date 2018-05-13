@@ -4,9 +4,11 @@ import (
 	"time"
 )
 
+type RetryFunc func(int) error
+
 // Do retries calling function f n-times.
 // It returns an error if none of the tries succeeds.
-func Do(n int, f func(attempt int) error) (err error) {
+func Do(n int, f RetryFunc) (err error) {
 	for i := 0; i < n; i++ {
 		err = f(i)
 		if err == nil {
@@ -18,7 +20,7 @@ func Do(n int, f func(attempt int) error) (err error) {
 
 // DoSleep retries calling function f n-times and sleeps for d after each call.
 // It returns an error if none of the tries succeeds.
-func DoSleep(n int, d time.Duration, f func(attempt int) error) (err error) {
+func DoSleep(n int, d time.Duration, f RetryFunc) (err error) {
 	for i := 0; i < n; i++ {
 		err = f(i)
 		if err == nil {
@@ -27,4 +29,25 @@ func DoSleep(n int, d time.Duration, f func(attempt int) error) (err error) {
 		time.Sleep(d)
 	}
 	return err
+}
+
+// DoForever keeps trying to call function f until it succeeds.
+func DoForever(f RetryFunc) {
+	for i := 0; ; i++ {
+		err := f(i)
+		if err == nil {
+			return
+		}
+	}
+}
+
+// DoForeverSleep keeps trying to call function f until it succeeds, and sleeps after each failure.
+func DoForeverSleep(d time.Duration, f RetryFunc) {
+	for i := 0; ; i++ {
+		err := f(i)
+		if err == nil {
+			return
+		}
+		time.Sleep(d)
+	}
 }
