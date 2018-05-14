@@ -31,8 +31,8 @@ func DoSleep(n int, d time.Duration, f RetryFunc) (err error) {
 	return err
 }
 
-// DoForever keeps trying to call function f until it succeeds.
-func DoForever(f RetryFunc) {
+// Forever keeps trying to call function f until it succeeds.
+func Forever(f RetryFunc) {
 	for i := 0; ; i++ {
 		err := f(i)
 		if err == nil {
@@ -41,8 +41,8 @@ func DoForever(f RetryFunc) {
 	}
 }
 
-// DoForeverSleep keeps trying to call function f until it succeeds, and sleeps after each failure.
-func DoForeverSleep(d time.Duration, f RetryFunc) {
+// ForeverSleep keeps trying to call function f until it succeeds, and sleeps after each failure.
+func ForeverSleep(d time.Duration, f RetryFunc) {
 	for i := 0; ; i++ {
 		err := f(i)
 		if err == nil {
