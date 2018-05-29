@@ -25,5 +25,6 @@ if err != nil {
 Retry forever.
 
 ```go
-retry.DoForever(thisFunctionMayFail)
+retry.Forever(thisFunctionMayFail)
 ```
+
