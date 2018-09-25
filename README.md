@@ -1,3 +1,5 @@
+Deprecated. Use https://github.com/tinrab/kit instead.
+
 # Retry
 
 A simple retry package for Go.
